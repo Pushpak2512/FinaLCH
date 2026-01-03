@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Child Vaccination - Health Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.1em;
+        }
+
+        .nav-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .icon {
+            width: 60px;
+            height: 60px;
+            margin-right: 20px;
+            padding: 15px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .vaccination-list-icon {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        }
+
+        .certificate-icon {
+            background: linear-gradient(135deg, #00d2d3, #54a0ff);
+        }
+
+        .card h2 {
+            color: #2c3e50;
+            font-size: 1.5em;
+        }
+
+        .vaccination-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin: 10px 0;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+            transition: all 0.3s ease;
+        }
+
+        .vaccination-item:hover {
+            background: #e3f2fd;
+            transform: translateX(5px);
+        }
+
+        .vaccine-info {
+            flex-grow: 1;
+        }
+
+        .vaccine-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .vaccine-age {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+
+        .status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .overdue {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .certificate-section {
+            text-align: center;
+        }
+
+        .certificate-preview {
+            background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+            border: 2px dashed #6c757d;
+            border-radius: 15px;
+            padding: 40px 20px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        .certificate-preview:hover {
+            border-color: #007bff;
+            background: linear-gradient(145deg, #e3f2fd, #bbdefb);
+        }
+
+        .certificate-icon-large {
+            font-size: 4em;
+            color: #6c757d;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .progress-bar {
+            background: #ecf0f1;
+            height: 10px;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #00d2d3, #54a0ff);
+            height: 100%;
+            width: 65%;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏥 Child Vaccination Tracker</h1>
+            <p>Keep track of your child's vaccination schedule and certificates</p>
+            <a href="#" class="nav-link" onclick="goHome()">← Back to Home</a>
+        </div>
+
+        <div class="main-content">
+            <!-- Vaccination List Section -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="icon vaccination-list-icon">
+                        <div style="color: white; font-size: 1.5em;">💉</div>
+                    </div>
+                    <h2>Vaccination Schedule</h2>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number">13</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Pending</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1</div>
+                        <div class="stat-label">Overdue</div>
+                    </div>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+
+                <div class="vaccination-list">
+                    <div class="vaccination-item">
+                        <div class="vaccine-info">
+                            <div class="vaccine-name">Hepatitis B</div>
+                            <div class="vaccine-age">Birth</div>
+                        </div>
+                        <span class="status completed">✓ Completed</span>
+                    </div>
+
+                    <div class="vaccination-item">
+                        <div class="vaccine-info">
+                            <div class="vaccine-name">BCG</div>
+                            <div class="vaccine-age">Birth</div>
+                        </div>
+                        <span class="status completed">✓ Completed</span>
+                    </div>
+
+                    <div class="vaccination-item">
+                        <div class="vaccine-info">
+                            <div class="vaccine-name">DPT (1st dose)</div>
+                            <div class="vaccine-age">6 weeks</div>
+                        </div>
+                        <span class="status completed">✓ Completed</span>
+                    </div>
+
+                    <div class="vaccination-item">
+                        <div class="vaccine-info">
+                            <div class="vaccine-name">Polio (1st dose)</div>
+                            <div class="vaccine-age">6 weeks</div>
+                        </div>
+                        <span class="status completed">✓ Completed</span>
+                    </div>
+
+                    <div class="vaccination-item">
+                        <div class="vaccine-info">
+                            <div class="vaccine-name">MMR (1st dose)</div>
+                            <div class="vaccine-age">12 months</div>
+                        </div>
+                        <span class="status pending">⏳ Pending</span>
+                    </div>
+
+                    <div class="vaccination-item">
+                        <div class="vaccine-info">
+                            <div class="vaccine-name">Chickenpox</div>
+                            <div class="vaccine-age">15 months</div>
+                        </div>
+                        <span class="status overdue">⚠️ Overdue</span>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="viewFullSchedule()">View Full Schedule</button>
+            </div>
+
+            <!-- Certificate Section -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="icon certificate-icon">
+                        <div style="color: white; font-size: 1.5em;">📋</div>
+                    </div>
+                    <h2>Vaccination Certificate</h2>
+                </div>
+
+                <div class="certificate-section">
+                    <div class="certificate-preview" onclick="generateCertificate()">
+                        <div class="certificate-icon-large">📄</div>
+                        <h3>Digital Vaccination Certificate</h3>
+                        <p>Click to generate or view certificate</p>
+                    </div>
+
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-number">65%</div>
+                            <div class="stat-label">Complete</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">13</div>
+                            <div class="stat-label">Vaccines</div>
+                        </div>
+                    </div>
+
+                    <button class="btn" onclick="downloadCertificate()">📥 Download PDF</button>
+                    <button class="btn" onclick="shareCertificate()">📤 Share Certificate</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function goHome() {
+            alert('Navigating to Home Page...\n(This would link to your main homepage)');
+        }
+
+        function viewFullSchedule() {
+            alert('Opening detailed vaccination schedule...\nThis would show all vaccines with dates and recommendations.');
+        }
+
+        function generateCertificate() {
+            alert('Generating vaccination certificate...\nThis would create a detailed certificate with all completed vaccinations.');
+        }
+
+        function downloadCertificate() {
+            alert('Downloading certificate as PDF...\nThis would generate and download a printable vaccination certificate.');
+        }
+
+        function shareCertificate() {
+            alert('Opening share options...\nThis would allow sharing the certificate via email, messaging, or other platforms.');
+        }
+
+        // Animate progress bar on load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.querySelector('.progress-fill').style.width = '76%';
+            }, 500);
+        });
+
+        // Add some interactive effects
+        document.querySelectorAll('.vaccination-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const vaccineName = this.querySelector('.vaccine-name').textContent;
+                alert(`Vaccination Details: ${vaccineName}\n\nThis would show detailed information about this vaccine including:\n- Date administered\n- Healthcare provider\n- Batch number\n- Next dose due date`);
+            });
+        });
+    </script>
+</body>
+</html>

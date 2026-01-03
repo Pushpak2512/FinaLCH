@@ -1,0 +1,71 @@
+body {
+  background: #fceabb;
+  background: linear-gradient(135deg, #f8b195 0%, #fceabb 100%);
+  font-family: 'Segoe UI', Verdana, Geneva, Tahoma, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+.form-container {
+  background: #fffaf4;
+  max-width: 600px;
+  margin: 40px auto 0 auto;
+  padding: 32px 40px 24px 40px;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(162, 180, 195, 0.18),
+    0 1.5px 9px #f8b19544;
+  border: 2px solid #e4d0c3;
+}
+h2 {
+  text-align: center;
+  color: #6c5b7b;
+  margin-bottom: 28px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #355c7d;
+}
+input[type='text'],
+input[type='date'],
+input[type='number'],
+textarea,
+select {
+  width: 98%;
+  padding: 8px 10px;
+  margin: 6px 0 16px 0;
+  border: 1px solid #c7c5d6;
+  border-radius: 6px;
+  background: #f3e7e9;
+  color: #444;
+  font-size: 1rem;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+input[type='text']:focus,
+input[type='date']:focus,
+input[type='number']:focus,
+textarea:focus,
+select:focus {
+  border: 1.4px solid #b0aac2;
+  box-shadow: 0 0 5px #f8b19555;
+  outline: none;
+}
+input[type='file'] {
+  margin-bottom: 18px;
+  background: #f3e7e9;
+  border: none;
+  color: #444;
+}
+/* Checkbox and radio styles */
+input[type='checkbox'],
+input[type='radio'] {
+  accent-color: #f7cac9;
+  margin-right: 6px;
+}
+/* Checkbox/radio label alignment fix */
+label[for='thinness'],
+label[for='swelling'],
+label[for='hair'],
+label[for='skin'],
+label[for='otherSign

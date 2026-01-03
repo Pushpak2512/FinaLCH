@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allergy Management - Health Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.1em;
+        }
+
+        .nav-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 1em;
+        }
+
+        .total {
+            color: #e74c3c;
+        }
+
+        .food {
+            color: #f39c12;
+        }
+
+        .environmental {
+            color: #27ae60;
+        }
+
+        .seasonal {
+            color: #9b59b6;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .icon {
+            width: 60px;
+            height: 60px;
+            margin-right: 20px;
+            padding: 15px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .allergy-list-icon {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        }
+
+        .solution-icon {
+            background: linear-gradient(135deg, #00d2d3, #54a0ff);
+        }
+
+        .card h2 {
+            color: #2c3e50;
+            font-size: 1.5em;
+        }
+
+        .allergy-item {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            margin: 15px 0;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 5px solid #e74c3c;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .allergy-item:hover {
+            background: #ffe6e6;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .allergy-icon {
+            font-size: 2em;
+            margin-right: 15px;
+            width: 50px;
+            text-align: center;
+        }
+
+        .allergy-details {
+            flex-grow: 1;
+        }
+
+        .allergy-name {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .allergy-type {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-bottom: 3px;
+        }
+
+        .severity-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        .severity-mild {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .severity-moderate {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .severity-severe {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .solution-item {
+            background: #f0f8ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .solution-item:hover {
+            background: #e6f3ff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .solution-title {
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .solution-content {
+            color: #4b5563;
+            line-height: 1.6;
+        }
+
+        .solution-steps {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .solution-steps li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .solution-steps li:before {
+            content: "✓";
+            color: #10b981;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .emergency-card {
+            background: linear-gradient(135deg, #fee2e2, #fca5a5);
+            border: 2px solid #ef4444;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .emergency-card h3 {
+            color: #991b1b;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .emergency-contact {
+            background: #dc2626;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .emergency-contact:hover {
+            background: #b91c1c;
+            transform: scale(1.05);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .filter-tab {
+            padding: 10px 20px;
+            background: #ecf0f1;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-tab.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .full-width-card {
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-overview {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .allergy-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .allergy-icon {
+                margin: 0 0 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤧 Allergy Management</h1>
+            <p>Track and manage allergies with personalized solutions</p>
+            <a href="index.html" class="nav-link" onclick="goHome()">← Back to Home</a>
+        </div>
+
+        <!-- Stats Overview -->
+        <div class="stats-overview">
+            <div class="stat-card">
+                <div class="stat-icon total">⚠️</div>
+                <div class="stat-number total">8</div>
+                <div class="stat-label">Total Allergies</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon food">🍎</div>
+                <div class="stat-number food">3</div>
+                <div class="stat-label">Food Allergies</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon environmental">🌿</div>
+                <div class="stat-number environmental">4</div>
+                <div class="stat-label">Environmental</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon seasonal">🌸</div>
+                <div class="stat-number seasonal">1</div>
+                <div class="stat-label">Seasonal</div>
+            </div>
+        </div>
+
+        <!-- Emergency Information -->
+        <div class="emergency-card">
+            <h3>🚨 Emergency Allergy Response</h3>
+            <p>In case of severe allergic reaction, call emergency services immediately</p>
+            <button class="emergency-contact" onclick="callEmergency()">📞 Call 911</button>
+            <button class="emergency-contact" onclick="locateEpiPen()">💉 Find EpiPen</button>
+        </div>
+
+        <div class="main-content">
+            <!-- Known Allergies -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="icon allergy-list-icon">
+                        <div style="color: white; font-size: 1.5em;">⚠️</div>
+                    </div>
+                    <h2>Known Allergies</h2>
+                </div>
+
+                <div class="filter-tabs">
+                    <button class="filter-tab active" onclick="filterAllergies('all')">All</button>
+                    <button class="filter-tab" onclick="filterAllergies('food')">Food</button>
+                    <button class="filter-tab" onclick="filterAllergies('environmental')">Environmental</button>
+                    <button class="filter-tab" onclick="filterAllergies('seasonal')">Seasonal</button>
+                </div>
+
+                <div class="allergy-item" onclick="viewAllergyDetails('peanuts')">
+                    <div class="allergy-icon">🥜</div>
+                    <div class="allergy-details">
+                        <div class="allergy-name">Peanuts</div>
+                        <div class="allergy-type">Food Allergy</div>
+                        <div class="severity-badge severity-severe">Severe</div>
+                    </div>
+                </div>
+
+                <div class="allergy-item" onclick="viewAllergyDetails('shellfish')">
+                    <div class="allergy-icon">🦐</div>
+                    <div class="allergy-details">
+                        <div class="allergy-name">Shellfish</div>
+                        <div class="allergy-type">Food Allergy</div>
+                        <div class="severity-badge severity-moderate">Moderate</div>
+                    </div>
+                </div>
+
+                <div class="allergy-item" onclick="viewAllergyDetails('dairy')">
+                    <div class="allergy-icon">🥛</div>
+                    <div class="allergy-details">
+                        <div class="allergy-name">Dairy Products</div>
+                        <div class="allergy-type">Food Allergy</div>
+                        <div class="severity-badge severity-mild">Mild</div>
+                    </div>
+                </div>
+
+                <div class="allergy-item" onclick="viewAllergyDetails('pollen')">
+                    <div class="allergy-icon">🌸</div>
+                    <div class="allergy-details">
+                        <div class="allergy-name">Pollen</div>
+                        <div class="allergy-type">Seasonal Allergy</div>
+                        <div class="severity-badge severity-moderate">Moderate</div>
+                    </div>
+                </div>
+
+                <div class="allergy-item" onclick="viewAllergyDetails('dust')">
+                    <div class="allergy-icon">🌪️</div>
+                    <div class="allergy-details">
+                        <div class="allergy-name">Dust Mites</div>
+                        <div class="allergy-type">Environmental</div>
+                        <div class="severity-badge severity-mild">Mild</div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn" onclick="addNewAllergy()">➕ Add New Allergy</button>
+                    <button class="btn btn-secondary" onclick="exportAllergyList()">📄 Export List</button>
+                </div>
+            </div>
+
+            <!-- Solutions & Management -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="icon solution-icon">
+                        <div style="color: white; font-size: 1.5em;">💡</div>
+                    </div>
+                    <h2>Solutions & Management</h2>
+                </div>
+
+                <div class="solution-item">
+                    <div class="solution-title">
+                        🥜 Peanut Allergy Management
+                    </div>
+                    <div class="solution-content">
+                        <strong>Avoidance Strategy:</strong>
+                        <ul class="solution-steps">
+                            <li>Always read food labels carefully</li>
+                            <li>Carry an EpiPen at all times</li>
+                            <li>Inform restaurants about your allergy</li>
+                            <li>Avoid products with "may contain" warnings</li>
+                        </ul>
+                        <strong>Emergency Treatment:</strong> Epinephrine auto-injector
+                    </div>
+                </div>
+
+                <div class="solution-item">
+                    <div class="solution-title">
+                        🌸 Seasonal Allergy Relief
+                    </div>
+                    <div class="solution-content">
+                        <strong>Prevention & Treatment:</strong>
+                        <ul class="solution-steps">
+                            <li>Take antihistamines before pollen season</li>
+                            <li>Keep windows closed during high pollen days</li>
+                            <li>Use air purifiers indoors</li>
+                            <li>Shower after outdoor activities</li>
+                        </ul>
+                        <strong>Medications:</strong> Loratadine, Nasal sprays
+                    </div>
+                </div>
+
+                <div class="solution-item">
+                    <div class="solution-title">
+                        🌪️ Dust Mite Control
+                    </div>
+                    <div class="solution-content">
+                        <strong>Home Management:</strong>
+                        <ul class="solution-steps">
+                            <li>Use allergen-proof mattress covers</li>
+                            <li>Wash bedding in hot water weekly</li>
+                            <li>Maintain humidity below 50%</li>
+                            <li>Vacuum with HEPA filter regularly</li>
+                        </ul>
+                        <strong>Treatment:</strong> Nasal corticosteroids
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn btn-success" onclick="viewTreatmentPlan()">📋 View Full Treatment Plan</button>
+                    <button class="btn" onclick="consultDoctor()">👨‍⚕️ Consult Doctor</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Medication Tracker -->
+        <div class="card full-width-card">
+            <div class="card-header">
+                <div class="icon" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">
+                    <div style="color: white; font-size: 1.5em;">💊</div>
+                </div>
+                <h2>Allergy Medications & Emergency Kit</h2>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div class="solution-item">
+                    <div class="solution-title">💉 Emergency Kit</div>
+                    <div class="solution-content">
+                        <ul class="solution-steps">
+                            <li><strong>EpiPen:</strong> Expires March 2026</li>
+                            <li><strong>Benadryl:</strong> 25mg tablets</li>
+                            <li><strong>Inhaler:</strong> For respiratory symptoms</li>
+                            <li><strong>Medical Alert Card:</strong> Up to date</li>
+                        </ul>
+                        <button class="btn btn-secondary" onclick="checkKitExpiry()">🔍 Check Expiry Dates</button>
+                    </div>
+                </div>
+
+                <div class="solution-item">
+                    <div class="solution-title">💊 Daily Medications</div>
+                    <div class="solution-content">
+                        <ul class="solution-steps">
+                            <li><strong>Loratadine:</strong> 10mg daily (morning)</li>
+                            <li><strong>Nasal Spray:</strong> 2 sprays each nostril</li>
+                            <li><strong>Probiotics:</strong> For gut health</li>
+                            <li><strong>Vitamin D:</strong> Immune support</li>
+                        </ul>
+                        <button class="btn btn-success" onclick="setMedicationReminder()">⏰ Set Reminders</button>
+                    </div>
+                </div>
+
+                <div class="solution-item">
+                    <div class="solution-title">📊 Symptom Tracker</div>
+                    <div class="solution-content">
+                        <p><strong>This Week:</strong></p>
+                        <ul class="solution-steps">
+                            <li>Monday: Mild sneezing (Pollen: High)</li>
+                            <li>Wednesday: No symptoms</li>
+                            <li>Friday: Itchy eyes (Dust exposure)</li>
+                        </ul>
+                        <button class="btn" onclick="logSymptoms()">📝 Log Today's Symptoms</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function goHome() {
+            alert('Navigating to Home Page...\n(This would link to your main homepage)');
+        }
+
+        function callEmergency() {
+            if (confirm('🚨 This would call emergency services (911).\n\nFor demonstration purposes only.\nDo you want to continue?')) {
+                alert('Calling emergency services...\n📞 Emergency contact initiated');
+            }
+        }
+
+        function locateEpiPen() {
+            alert('🔍 EpiPen Location Finder\n\n📍 Current locations:\n• Kitchen drawer (main EpiPen)\n• Backpack (backup)\n• Car glove compartment (emergency)\n• Office desk (work backup)');
+        }
+
+        function filterAllergies(type) {
+            // Update active tab
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            alert(`Filtering allergies by: ${type}\n\nThis would show only:\n- ${type === 'all' ? 'All known allergies' : type + ' allergies'}`);
+        }
+
+        function viewAllergyDetails(allergy) {
+            const allergyInfo = {
+                'peanuts': 'Peanut Allergy Details:\n\n🥜 Severity: SEVERE\n⚠️ Symptoms: Anaphylaxis, swelling, difficulty breathing\n💉 Treatment: EpiPen immediately, call 911\n🚫 Avoid: All peanut products, cross-contamination\n📅 Last reaction: Never (strict avoidance)',
+                'shellfish': 'Shellfish Allergy Details:\n\n🦐 Severity: MODERATE\n⚠️ Symptoms: Hives, stomach upset, mild swelling\n💊 Treatment: Antihistamines, monitor symptoms\n🚫 Avoid: Shrimp, crab, lobster, mollusks\n📅 Last reaction: 6 months ago (accidental exposure)',
+                'dairy': 'Dairy Allergy Details:\n\n🥛 Severity: MILD\n⚠️ Symptoms: Digestive issues, mild skin rash\n💊 Treatment: Lactase supplements, avoidance\n🚫 Avoid: Milk, cheese, yogurt, butter\n📅 Last reaction: 2 weeks ago (pizza)',
+                'pollen': 'Pollen Allergy Details:\n\n🌸 Severity: MODERATE\n⚠️ Symptoms: Sneezing, itchy eyes, runny nose\n💊 Treatment: Daily antihistamines, nasal spray\n🚫 Peak season: Spring (March-May)\n📅 Current status: Managed with medication',
+                'dust': 'Dust Mite Allergy Details:\n\n🌪️ Severity: MILD\n⚠️ Symptoms: Morning congestion, mild cough\n💊 Treatment: Nasal rinse, air purifiers\n🚫 Triggers: Dusty environments, old bedding\n📅 Management: Good with current routine'
+            };
+            
+            alert(allergyInfo[allergy] || 'Allergy details not found.');
+        }
+
+        function addNewAllergy() {
+            alert('Adding New Allergy...\n\nThis would open a form to:\n• Select allergy type\n• Set severity level\n• Add symptoms\n• Note triggers\n• Set treatment plan');
+        }
+
+        function exportAllergyList() {
+            alert('Exporting Allergy Information...\n\nThis would generate:\n• Complete allergy profile\n• Emergency contact card\n• Treatment plans\n• Medication list\n• PDF for medical providers');
+        }
+
+        function viewTreatmentPlan() {
+            alert('Complete Treatment Plan:\n\n📋 Personalized allergy management including:\n• Daily medication schedule\n• Avoidance strategies\n• Emergency protocols\n• Seasonal adjustments\n• Follow-up appointments');
+        }
+
+        function consultDoctor() {
+            alert('Doctor Consultation Options:\n\n👨‍⚕️ Available services:\n• Schedule allergy specialist appointment\n• Telemedicine consultation\n• Review current treatment plan\n• Update emergency medications\n• Discuss new symptoms');
+        }
+
+        function checkKitExpiry() {
+            alert('Emergency Kit Status:\n\n✅ EpiPen: Valid until March 2026\n✅ Benadryl: Valid until December 2025\n⚠️ Inhaler: Expires in 2 months\n✅ Medical card: Up to date\n\n🔔 Reminder set for inhaler renewal');
+        }
+
+        function setMedicationReminder() {
+            alert('Medication Reminders Set:\n\n⏰ Daily Schedule:\n• 8:00 AM - Loratadine\n• 8:30 AM - Nasal spray\n• 7:00 PM - Probiotics\n• 7:30 PM - Vitamin D\n\n📱 Phone notifications enabled');
+        }
+
+        function logSymptoms() {
+            alert('Symptom Logger:\n\n📝 Track today\'s symptoms:\n• Severity (1-10 scale)\n• Triggers identified\n• Medications taken\n• Duration of symptoms\n• Environmental factors\n\nThis helps identify patterns and improve treatment.');
+        }
+
+        // Initialize page with seasonal allergy alert
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                if (new Date().getMonth() >= 2 && new Date().getMonth() <= 4) { // Spring months
+                    alert('🌸 Seasonal Allergy Alert!\n\nPollen count is HIGH today.\nConsider taking your antihistamine and limiting outdoor activities.');
+                }
+            }, 1500);
+        });
+    </script>
+</body>

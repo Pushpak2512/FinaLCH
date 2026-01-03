@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Child Health Status Form</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<style>
+body {
+  background: #fceabb;
+  background: linear-gradient(135deg, #f8b195 0%, #fceabb 100%);
+  font-family: 'Segoe UI', Verdana, Geneva, Tahoma, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+.form-container {
+  background: #fffaf4;
+  max-width: 600px;
+  margin: 40px auto 0 auto;
+  padding: 32px 40px 24px 40px;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(162, 180, 195, 0.18),
+    0 1.5px 9px #f8b19544;
+  border: 2px solid #e4d0c3;
+}
+h2 {
+  text-align: center;
+  color: #6c5b7b;
+  margin-bottom: 28px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #355c7d;
+}
+input[type='text'],
+input[type='date'],
+input[type='number'],
+textarea,
+select {
+  width: 98%;
+  padding: 8px 10px;
+  margin: 6px 0 16px 0;
+  border: 1px solid #c7c5d6;
+  border-radius: 6px;
+  background: #f3e7e9;
+  color: #444;
+  font-size: 1rem;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+input[type='text']:focus,
+input[type='date']:focus,
+input[type='number']:focus,
+textarea:focus,
+select:focus {
+  border: 1.4px solid #b0aac2;
+  box-shadow: 0 0 5px #f8b19555;
+  outline: none;
+}
+input[type='file'] {
+  margin-bottom: 18px;
+  background: #f3e7e9;
+  border: none;
+  color: #444;
+}
+/* Checkbox and radio styles */
+input[type='checkbox'],
+input[type='radio'] {
+  accent-color: #f7cac9;
+  margin-right: 6px;
+}
+/* Checkbox/radio label alignment fix */
+label[for='thinness'],
+label[for='swelling'],
+label[for='hair'],
+label[for='skin'],
+label[for='otherSign
+</style>
+<body>
+
+  <div class="form-container">
+    <h2>Child Health Status Form</h2>
+    <form action="#" method="post" enctype="multipart/form-data">
+      
+      <label for="childPhoto">Upload a full Photo of Child:</label><br />
+      <input type="file" id="childPhoto" name="childPhoto" accept="image/*" required /><br />
+      
+      <label for="childName">Child's Name:</label><br />
+      <input type="text" id="childName" name="childName" required /><br />
+      
+      <label for="parentName">Parent's Name:</label><br />
+      <input type="text" id="parentName" name="parentName" required /><br />
+
+      <label for="parentNumber">Parent's Phone Number:</label><br />
+      <input type="text" id="parentNumber" name="parentNumber" required /><br />
+      
+      <label for="parentmail">Parent's Mail ID:</label><br />
+      <input type="text" id="parentmail" name="parentmail" required /><br />
+
+      <label for="dob">Date of Birth:</label><br />
+      <input type="date" id="dob" name="dob" required /><br />
+
+      <label for="gender">Gender:</label><br />
+      <select id="gender" name="gender" required>
+        <option value="" disabled selected>Select</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select><br />
+
+      <label for="height">Height (cm):</label><br />
+      <input type="number" id="height" name="height" step="0.1" min="0" required /><br />
+
+      <label for="weight">Weight (kg):</label><br />
+      <input type="number" id="weight" name="weight" step="0.1" min="0" required /><br />
+      
+      <label for="Hospital of Birth">Name of hospital where child was born:</label><br />
+      <textarea id="Hospital of Birth" name="Hospital of Birth" rows="2" cols="40"></textarea><br />
+
+      <label for="vaccinated">Vaccination Status:</label><br />
+      <select id="vaccinated" name="vaccinated" required>
+        <option value="" disabled selected>Select</option>
+        <option value="complete">Complete</option>
+        <option value="partial">Partial</option>
+        <option value="none">None</option>
+      </select><br />
+
+      <label>Does your child have any allergies?</label><br />
+      <input type="radio" id="allergyYes" name="allergies" value="yes" required />
+      <label for="allergyYes">Yes</label>
+      <input type="radio" id="allergyNo" name="allergies" value="no" />
+      <label for="allergyNo">No</label><br />
+
+      <label for="allergyDetails">If yes, please specify:</label><br />
+      <input
+        type="text"
+        id="allergyDetails"
+        name="allergyDetails"
+        placeholder="e.g. peanuts, pollen"
+      /><br />
+
+      <label for="medicalConditions">Any other known medical conditions?</label><br />
+      <textarea id="medicalConditions" name="medicalConditions" rows="2" cols="40"></textarea><br />
+
+      <label>Visible Signs of Malnutrition:</label><br />
+      <input type="checkbox" id="thinness" name="malnutritionSigns" value="thinness" />
+      <label for="thinness">Thinness</label>
+      <input type="checkbox" id="swelling" name="malnutritionSigns" value="swelling" />
+      <label for="swelling">Swelling (edema)</label>
+      <input type="checkbox" id="hair" name="malnutritionSigns" value="hair" />
+      <label for="hair">Poor hair quality</label>
+      <input type="checkbox" id="skin" name="malnutritionSigns" value="skin" />
+      <label for="skin">Skin changes</label>
+      <input type="checkbox" id="otherSign" name="malnutritionSigns" value="other" />
+      <label for="otherSign">Other (specify below)</label>
+      <input
+        type="text"
+        id="otherSignDetails"
+        name="otherSignDetails"
+        placeholder="Specify other signs"
+      /><br /><br />
+      
+      <label>Does child have any medical history?</label><br />
+      <input type="radio" id="medical-historyYes" name="medical-history" value="yes" required />
+      <label for="medical-historyYes">Yes</label>
+      <input type="radio" id="medical-historyNo" name="medical-history" value="no" />
+      <label for="medical-historyNo">No</label><br />
+
+      <label for="medical-history-details">If yes please specify:</label><br />
+      <textarea id="medical-history-details" name="medical-history-details" rows="2" cols="40"></textarea><br />
+
+      <label for="recentIllness">Recent Illness (within last month):</label><br />
+      <input type="text" id="recentIllness" name="recentIllness" /><br />
+
+      <input type="checkbox" id="parentConcern" name="parentConcern" />
+      <label for="parentConcern" style="font-weight:500;"
+        >I have concerns about my child's health</label
+      ><br />
+
+      <input type="submit" value="Submit" />
+    </form>
+  </div>
+</body>
+</html>
+
